@@ -9,7 +9,7 @@ public class UtilisateurDao {
 //	static {
 //		utilisateurs.add(new Utilisateur(1, "Biaye", "Salif", "sbiaye", "password123"));
 //	}
-	private static int count = 1;
+	private static int count = 0;
 
 	public boolean ajouter(Utilisateur utilisateur) {
 		utilisateur.setId(++count);
