@@ -1,0 +1,332 @@
+/* ==========================================================================
+   HEADER - Light Elegant Ivory
+   ========================================================================== */
+
+.main-header {
+  background: linear-gradient(180deg, #faf9f7 0%, #f5f3f0 100%);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border: none;
+}
+
+/* Ligne bleue décorative en bas */
+.main-header::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(30, 64, 175, 0.2) 20%,
+    rgba(30, 64, 175, 0.4) 50%,
+    rgba(30, 64, 175, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+/* Glow subtil */
+.main-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(30, 64, 175, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Container */
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LOGO SECTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: #1e40af;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 16px;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo:hover .logo-icon {
+  background: #1e3a8a;
+}
+
+.logo h1 {
+  color: #1a1a1a;
+  font-size: 22px;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo:hover h1 {
+  color: #1e40af;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NAVIGATION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.main-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #525252;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Underline animé au hover */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: #1e40af;
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  color: #1a1a1a;
+}
+
+.nav-link:hover::after {
+  width: calc(100% - 36px);
+}
+
+/* Active state */
+.nav-link.active {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  width: calc(100% - 36px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   USER ICON
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-left: 16px;
+  color: #525252;
+}
+
+.user-icon:hover {
+  border-color: rgba(30, 64, 175, 0.4);
+  color: #1e40af;
+}
+
+.user-icon svg,
+.user-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Notification Dot */
+.user-icon[data-notifications]::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  background: #1e40af;
+  border-radius: 50%;
+  border: 2px solid #faf9f7;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   THEME BUTTON
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.theme-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #525252;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-btn:hover {
+  border-color: rgba(30, 64, 175, 0.4);
+  color: #1e40af;
+  background: rgba(30, 64, 175, 0.04);
+}
+
+.theme-btn:active {
+  transform: scale(0.98);
+}
+
+.theme-btn:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MAIN CONTENT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.main-content {
+  min-height: calc(100vh - 200px);
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 16px 20px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .logo h1 {
+    font-size: 18px;
+  }
+
+  .main-nav {
+    gap: 4px;
+  }
+
+  .nav-link {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .user-icon {
+    width: 36px;
+    height: 36px;
+    margin-left: 12px;
+  }
+
+  .main-content {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 14px 16px;
+  }
+
+  .logo h1 {
+    font-size: 16px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+
+  .user-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    margin-left: 8px;
+  }
+
+  .main-content {
+    padding: 24px 16px;
+  }
+}
+
+/* Scrolled state */
+.main-header.scrolled {
+  background: rgba(250, 249, 247, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .main-header,
+  .logo-icon,
+  .nav-link,
+  .user-icon {
+    transition: none;
+  }
+}

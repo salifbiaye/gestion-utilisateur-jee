@@ -1,0 +1,111 @@
+/* ==========================================================================
+   FOOTER - Dark Mature Legendary
+   ========================================================================== */
+
+.main-footer {
+  background: linear-gradient(180deg, #0a0a0b 0%, #050506 100%);
+  color: #e5e5e7;
+  padding: 40px 0 30px;
+  margin-top: 60px;
+  text-align: center;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  border: none;
+}
+
+/* Ligne bleue décorative en haut */
+.main-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.3) 20%,
+    rgba(59, 130, 246, 0.6) 50%,
+    rgba(59, 130, 246, 0.3) 80%,
+    transparent 100%
+  );
+}
+
+/* Glow subtil */
+.main-footer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.footer-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-container p {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #a1a1a6;
+  letter-spacing: 0.01em;
+}
+
+.footer-info {
+  color: #6b6b70;
+  font-size: 13px;
+  margin-top: 16px;
+}
+
+/* Liens dans le footer */
+.main-footer a {
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.main-footer a:hover {
+  color: #60a5fa;
+}
+
+.main-footer a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #3b82f6;
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-footer a:hover::after {
+  width: 100%;
+}
+
+/* Divider optionnel */
+.footer-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+  margin: 20px auto;
+}
+
+/* Copyright style */
+.footer-copyright {
+  font-size: 12px;
+  color: #4a4a4f;
+  margin-top: 20px;
+  letter-spacing: 0.02em;
+}
