@@ -124,18 +124,14 @@ Faire de même dans `src/main/java/service/AuthenticationService.java` (ligne 11
 
 ### Première connexion
 
-Avec le stockage en mémoire par défaut, aucun utilisateur n'existe initialement.
-
-1. Accéder à `http://localhost:8080/gesusers2/register`
-2. Créer un premier compte utilisateur
-3. Se connecter avec les identifiants créés
+Avec le stockage en mémoire par défaut, un utilisateur de test est créé automatiquement.
+Identifiants: `test` / `password`
 
 ### Routes disponibles
 
 | Route | Méthode | Description | Authentification |
 |-------|---------|-------------|------------------|
 | `/login` | GET/POST | Page de connexion | Non |
-| `/register` | GET/POST | Inscription | Non |
 | `/logout` | GET | Déconnexion | Oui |
 | `/list` | GET | Liste des utilisateurs | Oui |
 | `/add` | GET/POST | Ajouter un utilisateur | Oui |
@@ -145,9 +141,8 @@ Avec le stockage en mémoire par défaut, aucun utilisateur n'existe initialemen
 
 ### Workflow typique
 
-1. **S'inscrire** : Créer un compte via `/register`
-2. **Se connecter** : Authentification via `/login`
-3. **Gérer les utilisateurs** : Ajouter, modifier, supprimer via `/list`
+1. **Se connecter** : Authentification via `/login` avec les identifiants `test` / `password`
+2. **Gérer les utilisateurs** : Ajouter, modifier, supprimer via `/list`
 4. **Personnaliser** : Changer le thème avec le bouton en haut à droite
 5. **Se déconnecter** : Via `/logout`
 
@@ -171,7 +166,6 @@ gesusers2/
 │   │   │   ├── UpdateUserServlet.java
 │   │   │   ├── RemoveUserServlet.java
 │   │   │   ├── AuthenticationController.java
-│   │   │   ├── RegisterServlet.java
 │   │   │   └── ThemeController.java
 │   │   └── form/
 │   │       ├── AbstractUserForm.java  # Classe de base validation
@@ -186,7 +180,6 @@ gesusers2/
 │   │   ├── web.xml                    # Descripteur de déploiement
 │   │   ├── lib/                       # Bibliothèques JSTL
 │   │   ├── login.jsp
-│   │   ├── register.jsp
 │   │   ├── listerUtilisateurs.jsp
 │   │   ├── ajouterUtilisateur.jsp
 │   │   └── modifierUtilisateur.jsp

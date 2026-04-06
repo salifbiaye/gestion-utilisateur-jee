@@ -37,7 +37,7 @@
 				</c:when>
 				<c:otherwise>
 					<a href="<c:url value='/login'/>" class="nav-link ${currentPage == 'login' ? 'active' : ''}">Connexion</a>
-					<a href="<c:url value='/register'/>" class="nav-link ${currentPage == 'register' ? 'active' : ''}">Inscription</a>
+
 				</c:otherwise>
 			</c:choose>
 		</nav>

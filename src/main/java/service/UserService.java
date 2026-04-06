@@ -3,18 +3,18 @@ package service;
 import java.util.ArrayList;
 
 import beans.Utilisateur;
-import dao.UtilisateurDao;
+import dao.UtilisateurDaoBdd;
 
 public class UserService {
 
-	private UtilisateurDao dao;
+	private UtilisateurDaoBdd dao;
 
-	public UserService(UtilisateurDao dao) {
+	public UserService(UtilisateurDaoBdd dao) {
 		this.dao = dao;
 	}
 
 	public UserService() {
-		this.dao = new UtilisateurDao();
+		this.dao = new UtilisateurDaoBdd();
 	}
 
 	public Utilisateur ajouter(Utilisateur utilisateur) {

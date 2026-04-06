@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GesUsers2" default="war" basedir=".">
+
+    <!-- Properties -->
+    <property name="src.dir" value="${basedir}/src/main/java"/>
+    <property name="webapp.dir" value="${basedir}/src/main/webapp"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="dist.dir" value="${build.dir}/dist"/>
+    <property name="war.file" value="${dist.dir}/gesusers2.war"/>
+    
+    <!-- Tomcat paths -->
+    <property name="tomcat.home" value="C:/Program Files/Apache Software Foundation/Tomcat 11.0"/>
+    <property name="tomcat.webapps" value="${tomcat.home}/webapps"/>
+
+    <!-- Classpath include JSTL libraries -->
+    <path id="classpath.build">
+        <fileset dir="${webapp.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Init -->
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile Java sources -->
+    <target name="compile" depends="init">
+        <javac 
+            srcdir="${src.dir}" 
+            destdir="${classes.dir}" 
+            debug="true"
+            includeantruntime="false">
+            <classpath refid="classpath.build"/>
+        </javac>
+    </target>
+
+    <!-- Create WAR file -->
+    <target name="war" depends="compile">
+        <war 
+            destfile="${war.file}" 
+            webxml="${webapp.dir}/WEB-INF/web.xml">
+            <classes dir="${classes.dir}"/>
+            <fileset dir="${webapp.dir}">
+                <exclude name="WEB-INF/web.xml"/>
+            </fileset>
+        </war>
+        <echo message="WAR created: ${war.file}"/>
+    </target>
+
+    <!-- Deploy to Tomcat -->
+    <target name="deploy" depends="war">
+        <copy file="${war.file}" todir="${tomcat.webapps}"/>
+        <echo message="WAR deployed to Tomcat!"/>
+        <echo message="Access the app at: http://localhost:8080/gesusers2"/>
+    </target>
+
+    <!-- Clean -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+</project>

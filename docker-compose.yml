@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: gesusers-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: passer123
+      MYSQL_DATABASE: gesusers
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gesusers-network
+
+  adminer:
+    image: adminer:latest
+    container_name: gesusers-adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysql
+    networks:
+      - gesusers-network
+
+volumes:
+  mysql_data:
+
+networks:
+  gesusers-network:
+    driver: bridge

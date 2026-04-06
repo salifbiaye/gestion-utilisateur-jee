@@ -14,9 +14,14 @@ public class UtilisateurDaoBdd {
 
 	// Méthode pour obtenir la connexion
 	private Connection getConnection() throws SQLException {
-		String url = "jdbc:mysql://localhost:3306/votre_bd";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new SQLException("Driver MySQL introuvable", e);
+		}
+		String url = "jdbc:mysql://localhost:3306/gesusers";
 		String user = "root";
-		String password = "votre_mot_de_passe";
+		String password = "passer123";
 		return DriverManager.getConnection(url, user, password);
 	}
 
