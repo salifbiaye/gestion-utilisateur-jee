@@ -10,7 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/theme")
 public class ThemeController extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+	private void toggleTheme(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String theme = (String) request.getSession().getAttribute("theme");
@@ -22,6 +23,16 @@ public class ThemeController extends HttpServlet {
 		}
 
 		String referer = request.getHeader("referer");
-		response.sendRedirect(referer != null ? referer : "list");
+		response.sendRedirect(referer != null ? referer : request.getContextPath() + "/login");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		toggleTheme(request, response);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		toggleTheme(request, response);
 	}
 }

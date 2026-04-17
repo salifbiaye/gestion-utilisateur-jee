@@ -9,23 +9,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/welcome")
+public class WelcomeServlet extends HttpServlet {
+
+	private static final String WELCOME_VIEW = "/WEB-INF/welcome.jsp";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String uri = request.getRequestURI();
-		if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png")) {
-			request.getServletContext().getNamedDispatcher("default").forward(request, response);
+
+		HttpSession session = request.getSession(false);
+
+		if (session == null || session.getAttribute("isConnected") == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
 			return;
 		}
 
-		HttpSession session = request.getSession(false);
-		if (session != null && session.getAttribute("isConnected") != null) {
-			response.sendRedirect(request.getContextPath() + "/list");
-		} else {
-			response.sendRedirect(request.getContextPath() + "/login");
-		}
+		getServletContext().getRequestDispatcher(WELCOME_VIEW).forward(request, response);
 	}
 }

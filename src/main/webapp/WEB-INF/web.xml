@@ -5,4 +5,7 @@
          version="6.1"
          metadata-complete="false">
 	<display-name>gesusers2</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

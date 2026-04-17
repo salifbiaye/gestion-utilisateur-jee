@@ -13,6 +13,7 @@ import service.UserService;
 @WebServlet("/delete")
 public class RemoveUserServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	private final UserService userService = new UserService();
 
 	@Override

@@ -15,6 +15,7 @@ import web.form.UpdateUserForm;
 
 @WebServlet("/update")
 public class UpdateUserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	private static final String FORM_UPDATE_USER_VIEW = "/WEB-INF/modifierUtilisateur.jsp";
 	private final UserService userService = new UserService();
 

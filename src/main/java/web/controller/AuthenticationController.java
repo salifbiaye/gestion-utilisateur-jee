@@ -32,7 +32,12 @@ public class AuthenticationController extends HttpServlet {
 
 			HttpSession existingSession = request.getSession(false);
 			if (existingSession != null && Boolean.TRUE.equals(existingSession.getAttribute("isConnected"))) {
-				response.sendRedirect(request.getContextPath() + "/list");
+				String role = (String) existingSession.getAttribute("role");
+				if ("admin".equals(role)) {
+					response.sendRedirect(request.getContextPath() + "/list");
+				} else {
+					response.sendRedirect(request.getContextPath() + "/welcome");
+				}
 				return;
 			}
 
@@ -91,7 +96,8 @@ public class AuthenticationController extends HttpServlet {
 				session.setAttribute("prenom", utilisateur.getPrenom());
 				message = "Connexion réussie";
 				status = "success";
-				url = String.format("/list?message=%s&status=%s", URLEncoder.encode(message, "UTF-8"), status);
+				String destination = "admin".equals(utilisateur.getRole()) ? "/list" : "/welcome";
+				url = String.format(destination + "?message=%s&status=%s", URLEncoder.encode(message, "UTF-8"), status);
 				response.sendRedirect(request.getContextPath() + url);
 			} else {
 				message = "Login ou mot de passe incorrect";

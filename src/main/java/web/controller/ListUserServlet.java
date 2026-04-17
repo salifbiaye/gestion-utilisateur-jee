@@ -20,7 +20,6 @@ public class ListUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setAttribute("utilisateurs", service.lister());
-
 		getServletContext().getRequestDispatcher(LIST_USERS_VIEW).forward(request, response);
 
 	}

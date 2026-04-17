@@ -34,6 +34,10 @@
     <input type="submit" value="Connexion">
 </form>
 
+<div class="auth-switch">
+    Pas encore inscrit ? <a href="<c:url value='/register'/>">S'inscrire</a>
+</div>
+
 <script>
     function togglePassword(inputId, btn) {
         const input = document.getElementById(inputId);

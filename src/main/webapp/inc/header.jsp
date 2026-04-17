@@ -62,16 +62,26 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a href="<c:url value='/list'/>" class="nav-link ${currentPage == 'list' ? 'active' : ''}">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-        <span>Liste des utilisateurs</span>
-      </a>
+      <c:if test="${sessionScope.role ne 'admin'}">
+        <a href="<c:url value='/welcome'/>" class="nav-link ${currentPage == 'welcome' ? 'active' : ''}">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Accueil</span>
+        </a>
+      </c:if>
       <c:if test="${sessionScope.role eq 'admin'}">
+        <a href="<c:url value='/list'/>" class="nav-link ${currentPage == 'list' ? 'active' : ''}">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Liste des utilisateurs</span>
+        </a>
         <a href="<c:url value='/add'/>" class="nav-link ${currentPage == 'add' ? 'active' : ''}">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -86,7 +96,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      <form action="<c:url value='/theme'/>" method="post" class="form-no-space">
+      <form action="<c:url value='/theme'/>" method="get" class="form-no-space">
         <button type="submit" class="sidebar-btn">
           <c:choose>
             <c:when test="${sessionScope.theme == 'light'}">
@@ -138,7 +148,7 @@
 
 <c:otherwise>
 <div class="theme-toggle-float">
-  <form action="<c:url value='/theme'/>" method="post" class="form-no-space">
+  <form action="<c:url value='/theme'/>" method="get" class="form-no-space">
     <button type="submit" class="theme-btn">
       <c:choose>
         <c:when test="${sessionScope.theme == 'light'}">
@@ -166,6 +176,29 @@
       </c:choose>
     </button>
   </form>
+  <c:if test="${currentPage == 'login'}">
+    <a href="<c:url value='/register'/>" class="theme-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <line x1="19" y1="8" x2="19" y2="14"/>
+        <line x1="22" y1="11" x2="16" y2="11"/>
+      </svg>
+      S'inscrire
+    </a>
+  </c:if>
+  <c:if test="${currentPage == 'register'}">
+    <a href="<c:url value='/login'/>" class="theme-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      Se connecter
+    </a>
+  </c:if>
 </div>
 <main class="main-content-login">
 </c:otherwise>

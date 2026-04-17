@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({ "/add", "/list", "/update", "/delete" })
+@WebFilter({ "/add", "/update", "/delete", "/list" })
 public class AuthenticationFilter extends HttpFilter implements Filter {
 
 	public AuthenticationFilter() {
@@ -31,19 +31,21 @@ public class AuthenticationFilter extends HttpFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		HttpSession session = httpRequest.getSession(false);
+		String path = httpRequest.getServletPath();
 
+		// Vérifier que l'utilisateur est connecté
 		if (session == null || session.getAttribute("isConnected") == null) {
 			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
 			return;
 		}
 
-		String path = httpRequest.getServletPath();
 		String role = (String) session.getAttribute("role");
 
-		if ((path.equals("/add") || path.equals("/delete") || path.equals("/update"))
+		// /add, /delete, /update, /list sont réservés aux administrateurs
+		if ((path.equals("/add") || path.equals("/delete") || path.equals("/update") || path.equals("/list"))
 				&& !"admin".equals(role)) {
 			String message = URLEncoder.encode("Accès refusé : réservé aux administrateurs", "UTF-8");
-			httpResponse.sendRedirect(httpRequest.getContextPath() + "/list?message=" + message + "&status=error");
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/welcome?message=" + message + "&status=error");
 			return;
 		}
 
