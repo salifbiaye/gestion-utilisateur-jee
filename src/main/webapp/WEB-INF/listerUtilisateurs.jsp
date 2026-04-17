@@ -20,11 +20,13 @@
 </c:if>
 
 
+<c:if test="${sessionScope.role eq 'admin'}">
 <div style="text-align: center; margin: 20px 0;">
 	<a class="btn-add" href="<c:url value='/add'/>">
 		Ajouter un utilisateur
 	</a>
 </div>
+</c:if>
 
 
 <c:choose>
@@ -38,31 +40,44 @@
 		<table>
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Login</th>
-					<th>Mot de passe</th>
-					<th>Actions</th>
+					<c:choose>
+						<c:when test="${sessionScope.role eq 'admin'}">
+							<th>ID</th>
+							<th>Nom</th>
+							<th>Prénom</th>
+							<th>Login</th>
+							<th>Mot de passe</th>
+							<th>Rôle</th>
+							<th>Actions</th>
+						</c:when>
+						<c:otherwise>
+							<th>Prénom</th>
+							<th>Nom</th>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="u" items="${utilisateurs}">
 					<tr>
-						<td>${u.id}</td>
-						<td>${u.nom}</td>
-						<td>${u.prenom}</td>
-						<td>${u.login}</td>
-						<td><span class="password-masked">••••••••</span></td>
-						<td>
-							<a class="btn-edit" href="<c:url value='/update?id=${u.id}'/>">
-								Modifier
-							</a>
-							<button class="btn-delete"
-							   onclick="openDeleteModal('<c:url value='/delete?id=${u.id}'/>', '${u.prenom} ${u.nom}')">
-								Supprimer
-							</button>
-						</td>
+						<c:choose>
+							<c:when test="${sessionScope.role eq 'admin'}">
+								<td>${u.id}</td>
+								<td>${u.nom}</td>
+								<td>${u.prenom}</td>
+								<td>${u.login}</td>
+								<td><span class="password-masked">••••••••</span></td>
+								<td><span class="role-badge role-badge--${u.role}"><c:choose><c:when test="${u.role eq 'admin'}">Administrateur</c:when><c:otherwise>Utilisateur</c:otherwise></c:choose></span></td>
+								<td>
+									<a class="btn-edit" href="<c:url value='/update?id=${u.id}'/>">Modifier</a>
+									<button class="btn-delete" onclick="openDeleteModal('<c:url value='/delete?id=${u.id}'/>', '${u.prenom} ${u.nom}')">Supprimer</button>
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td>${u.prenom}</td>
+								<td>${u.nom}</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>

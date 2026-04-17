@@ -8,6 +8,7 @@ public abstract class AbstractUserForm {
 	protected String prenom;
 	protected String login;
 	protected String password;
+	protected String role;
 	protected Map<String, String> errors;
 	protected boolean status;
 	protected String statusMessage;
@@ -19,6 +20,7 @@ public abstract class AbstractUserForm {
 		this.prenom = prenom;
 		this.login = login;
 		this.password = password;
+		this.role = "user";
 		this.errors = new HashMap<>();
 	}
 
@@ -26,6 +28,7 @@ public abstract class AbstractUserForm {
 		this(map.get("nom") != null ? map.get("nom")[0] : null, map.get("prenom") != null ? map.get("prenom")[0] : null,
 				map.get("login") != null ? map.get("login")[0] : null,
 				map.get("password") != null ? map.get("password")[0] : null);
+		this.role = map.get("role") != null ? map.get("role")[0] : "user";
 	}
 
 	protected void checkEmptyFields() {
@@ -99,5 +102,13 @@ public abstract class AbstractUserForm {
 
 	public void setStatusMessage(String statusMessage) {
 		this.statusMessage = statusMessage;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

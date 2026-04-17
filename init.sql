@@ -4,11 +4,12 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     nom VARCHAR(255),
     prenom VARCHAR(255),
     login VARCHAR(255) UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    role VARCHAR(50) NOT NULL DEFAULT 'user'
 );
 
 -- Insertion de quelques données de test (optionnel)
-INSERT INTO utilisateur (nom, prenom, login, password) VALUES
-('Dupont', 'Jean', 'jdupont', 'password123'),
-('Martin', 'Marie', 'mmartin', 'password456'),
-('Bernard', 'Pierre', 'pbernard', 'password789');
+INSERT INTO utilisateur (nom, prenom, login, password, role) VALUES
+('Dupont', 'Jean', 'jdupont', 'password123', 'admin'),
+('Martin', 'Marie', 'mmartin', 'password456', 'user'),
+('Bernard', 'Pierre', 'pbernard', 'password789', 'user');

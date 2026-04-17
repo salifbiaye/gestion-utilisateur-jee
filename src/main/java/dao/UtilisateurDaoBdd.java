@@ -26,7 +26,7 @@ public class UtilisateurDaoBdd {
 	}
 
 	public boolean ajouter(Utilisateur utilisateur) {
-		String sql = "INSERT INTO utilisateur (nom, prenom, login, password) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO utilisateur (nom, prenom, login, password, role) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -35,6 +35,7 @@ public class UtilisateurDaoBdd {
 			pstmt.setString(2, utilisateur.getPrenom());
 			pstmt.setString(3, utilisateur.getLogin());
 			pstmt.setString(4, utilisateur.getPassword());
+			pstmt.setString(5, utilisateur.getRole() != null ? utilisateur.getRole() : "user");
 
 			int rowsAffected = pstmt.executeUpdate();
 
@@ -55,7 +56,7 @@ public class UtilisateurDaoBdd {
 	}
 
 	public boolean modifier(Utilisateur utilisateur) {
-		String sql = "UPDATE utilisateur SET nom=?, prenom=?, login=?, password=? WHERE id=?";
+		String sql = "UPDATE utilisateur SET nom=?, prenom=?, login=?, password=?, role=? WHERE id=?";
 
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -63,7 +64,8 @@ public class UtilisateurDaoBdd {
 			pstmt.setString(2, utilisateur.getPrenom());
 			pstmt.setString(3, utilisateur.getLogin());
 			pstmt.setString(4, utilisateur.getPassword());
-			pstmt.setInt(5, utilisateur.getId());
+			pstmt.setString(5, utilisateur.getRole() != null ? utilisateur.getRole() : "user");
+			pstmt.setInt(6, utilisateur.getId());
 
 			return pstmt.executeUpdate() > 0;
 
@@ -97,7 +99,7 @@ public class UtilisateurDaoBdd {
 
 			while (rs.next()) {
 				Utilisateur u = new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("login"), rs.getString("password"));
+						rs.getString("login"), rs.getString("password"), rs.getString("role"));
 				utilisateurs.add(u);
 			}
 
@@ -118,7 +120,7 @@ public class UtilisateurDaoBdd {
 
 			if (rs.next()) {
 				return new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("login"), rs.getString("password"));
+						rs.getString("login"), rs.getString("password"), rs.getString("role"));
 			}
 
 		} catch (SQLException e) {
@@ -138,7 +140,7 @@ public class UtilisateurDaoBdd {
 
 			if (rs.next()) {
 				return new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("login"), rs.getString("password"));
+						rs.getString("login"), rs.getString("password"), rs.getString("role"));
 			}
 
 		} catch (SQLException e) {

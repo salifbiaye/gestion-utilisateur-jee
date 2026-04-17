@@ -2,23 +2,28 @@ package beans;
 
 public class Utilisateur {
 	private int id;
-	private String nom, prenom, login, password;
+	private String nom, prenom, login, password, role;
 
 	public Utilisateur() {
 
 	}
 
-	public Utilisateur(int id, String nom, String prenom, String login, String password) {
+	public Utilisateur(int id, String nom, String prenom, String login, String password, String role) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;
 		this.password = password;
+		this.role = role;
+	}
+
+	public Utilisateur(int id, String nom, String prenom, String login, String password) {
+		this(id, nom, prenom, login, password, "user");
 	}
 
 	public Utilisateur(String nom, String prenom, String login, String password) {
-		this(0, nom, prenom, login, password);
+		this(0, nom, prenom, login, password, "user");
 	}
 
 	public int getId() {
@@ -59,6 +64,14 @@ public class Utilisateur {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

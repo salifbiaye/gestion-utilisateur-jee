@@ -1,275 +1,176 @@
-# Gestion Utilisateurs - Application Java EE
+# GesUsers2 — Gestion des Utilisateurs
 
-Une application web complète de gestion d'utilisateurs développée avec Java EE (Jakarta EE), permettant l'authentification, les opérations CRUD et la personnalisation de thème.
+> Application web Java EE de gestion d'utilisateurs avec authentification, CRUD complet, gestion des rôles et thèmes light/dark.
 
-## 📋 Fonctionnalités
-
-### Authentification
-- Connexion sécurisée avec login et mot de passe
-- Inscription de nouveaux utilisateurs
-- Déconnexion avec préservation du thème
-- Protection des routes par filtre d'authentification
-
-### Gestion des Utilisateurs (CRUD)
-- **Créer** : Ajouter de nouveaux utilisateurs avec validation
-- **Lire** : Afficher la liste complète des utilisateurs
-- **Modifier** : Mettre à jour les informations d'un utilisateur
-- **Supprimer** : Supprimer un utilisateur avec confirmation
-
-### Personnalisation
-- Basculer entre thème clair et thème sombre
-- Thème persistant en session (conservé même après déconnexion)
-
-### Validation
-- Validation côté serveur des formulaires
-- Messages d'erreur contextuels en français
-- Vérification de l'unicité des logins
-- Affichage des messages de succès/erreur
-
-## 🛠️ Technologies Utilisées
-
-| Technologie | Version | Usage |
-|------------|---------|-------|
-| Java | 17 | Langage principal |
-| Jakarta Servlet | 6.1 | Gestion des requêtes HTTP |
-| JSP | - | Vues dynamiques |
-| JSTL | 2.0 | Logique dans les vues |
-| Apache Tomcat | 11.0 | Serveur d'application |
-| MySQL | - | Base de données (optionnel) |
-| JDBC | - | Accès aux données |
-
-## 📦 Prérequis
-
-- **Java Development Kit (JDK)** : Version 17 ou supérieure
-- **Apache Tomcat** : Version 11.0
-- **IDE** : Eclipse IDE for Enterprise Java and Web Developers (recommandé)
-- **MySQL** : Version 8.0+ (optionnel, pour la persistance en base de données)
-
-## 🚀 Installation et Configuration
-
-### 1. Cloner le projet
-
-```bash
-git clone <url-du-repo>
-cd gesusers2
-```
-
-### 2. Configuration dans Eclipse
-
-1. Ouvrir Eclipse IDE
-2. Importer le projet : `File > Import > Existing Projects into Workspace`
-3. Sélectionner le dossier du projet
-4. Cliquer sur `Finish`
-
-### 3. Configuration du serveur Tomcat
-
-1. Dans Eclipse, ouvrir la vue `Servers` : `Window > Show View > Servers`
-2. Clic droit > `New > Server`
-3. Sélectionner `Apache > Tomcat v11.0 Server`
-4. Spécifier le répertoire d'installation de Tomcat
-5. Ajouter le projet `gesusers2` au serveur
-
-### 4. Configuration de la base de données (optionnel)
-
-Par défaut, l'application utilise un stockage **en mémoire** (ArrayList). Les données sont perdues au redémarrage du serveur.
-
-Pour activer la **persistance MySQL** :
-
-#### a. Créer la base de données
-
-```sql
-CREATE DATABASE gestion_utilisateurs;
-USE gestion_utilisateurs;
-
-CREATE TABLE utilisateur (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(255) NOT NULL,
-    prenom VARCHAR(255) NOT NULL,
-    login VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
-```
-
-#### b. Configurer la connexion
-
-Modifier le fichier `src/main/java/dao/UtilisateurDaoBdd.java` (lignes 17-19) :
-
-```java
-String url = "jdbc:mysql://localhost:3306/gestion_utilisateurs";
-String user = "votre_user_mysql";
-String password = "votre_password_mysql";
-```
-
-#### c. Basculer vers le DAO base de données
-
-Modifier `src/main/java/service/UserService.java` (ligne 17) :
-
-```java
-// Avant
-this.dao = new UtilisateurDao();
-
-// Après
-this.dao = new UtilisateurDaoBdd();
-```
-
-Faire de même dans `src/main/java/service/AuthenticationService.java` (ligne 11).
-
-### 5. Démarrer l'application
-
-1. Clic droit sur le projet > `Run As > Run on Server`
-2. Sélectionner le serveur Tomcat configuré
-3. L'application démarre sur : `http://localhost:8080/gesusers2/`
-
-## 📖 Utilisation
-
-### Première connexion
-
-Avec le stockage en mémoire par défaut, un utilisateur de test est créé automatiquement.
-Identifiants: `test` / `password`
-
-### Routes disponibles
-
-| Route | Méthode | Description | Authentification |
-|-------|---------|-------------|------------------|
-| `/login` | GET/POST | Page de connexion | Non |
-| `/logout` | GET | Déconnexion | Oui |
-| `/list` | GET | Liste des utilisateurs | Oui |
-| `/add` | GET/POST | Ajouter un utilisateur | Oui |
-| `/update?id={id}` | GET/POST | Modifier un utilisateur | Oui |
-| `/delete?id={id}` | GET | Supprimer un utilisateur | Oui |
-| `/theme` | POST | Basculer le thème | Non |
-
-### Workflow typique
-
-1. **Se connecter** : Authentification via `/login` avec les identifiants `test` / `password`
-2. **Gérer les utilisateurs** : Ajouter, modifier, supprimer via `/list`
-4. **Personnaliser** : Changer le thème avec le bouton en haut à droite
-5. **Se déconnecter** : Via `/logout`
-
-## 📁 Structure du Projet
-
-```
-gesusers2/
-├── src/main/java/
-│   ├── beans/
-│   │   └── Utilisateur.java          # Modèle de données utilisateur
-│   ├── dao/
-│   │   ├── UtilisateurDao.java       # DAO en mémoire (par défaut)
-│   │   └── UtilisateurDaoBdd.java    # DAO MySQL
-│   ├── service/
-│   │   ├── UserService.java          # Logique métier CRUD
-│   │   └── AuthenticationService.java # Logique d'authentification
-│   ├── web/
-│   │   ├── controller/
-│   │   │   ├── ListUserServlet.java
-│   │   │   ├── AddUserServlet.java
-│   │   │   ├── UpdateUserServlet.java
-│   │   │   ├── RemoveUserServlet.java
-│   │   │   ├── AuthenticationController.java
-│   │   │   └── ThemeController.java
-│   │   └── form/
-│   │       ├── AbstractUserForm.java  # Classe de base validation
-│   │       ├── AddUserForm.java
-│   │       └── UpdateUserForm.java
-│   ├── mapper/
-│   │   └── UserMapper.java            # Conversion Form ↔ Entity
-│   └── filter/
-│       └── AuthenticationFilter.java  # Filtre de sécurité
-├── src/main/webapp/
-│   ├── WEB-INF/
-│   │   ├── web.xml                    # Descripteur de déploiement
-│   │   ├── lib/                       # Bibliothèques JSTL
-│   │   ├── login.jsp
-│   │   ├── listerUtilisateurs.jsp
-│   │   ├── ajouterUtilisateur.jsp
-│   │   └── modifierUtilisateur.jsp
-│   ├── inc/
-│   │   ├── header.jsp                 # En-tête commun
-│   │   └── footer.jsp                 # Pied de page commun
-│   └── css/
-│       ├── light/                     # Styles thème clair
-│       └── dark/                      # Styles thème sombre
-└── build/                             # Classes compilées
-```
-
-## 🏗️ Architecture
-
-L'application suit une architecture **3-tiers** classique :
-
-```
-┌─────────────────────────────────────┐
-│   Couche Présentation (JSP)        │
-│   - Vues JSP avec JSTL              │
-│   - Servlets (Contrôleurs)          │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│   Couche Service                    │
-│   - UserService                     │
-│   - AuthenticationService           │
-│   - Validation métier               │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│   Couche Accès Données (DAO)       │
-│   - UtilisateurDao (mémoire)        │
-│   - UtilisateurDaoBdd (MySQL)       │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│   Stockage                          │
-│   - ArrayList (par défaut)          │
-│   - MySQL (optionnel)               │
-└─────────────────────────────────────┘
-```
-
-### Patterns implémentés
-
-- **MVC** : Séparation Modèle-Vue-Contrôleur
-- **DAO Pattern** : Abstraction de l'accès aux données
-- **Service Layer** : Encapsulation de la logique métier
-- **Form Object Pattern** : Gestion de la validation
-- **Filter Pattern** : Authentification et autorisation
-
-## 🔐 Sécurité
-
-⚠️ **Note importante** : Cette application est destinée à des fins **éducatives**.
-
-**Limitations de sécurité actuelles** :
-- Mots de passe stockés en clair (non hashés)
-- Pas de protection CSRF
-- Pas de validation côté client
-- Session sans timeout configuré
-
-**Pour un environnement de production**, il faudrait :
-- Hasher les mots de passe (BCrypt, PBKDF2)
-- Ajouter une protection CSRF
-- Implémenter HTTPS
-- Ajouter une validation côté client
-- Configurer des timeouts de session
-- Utiliser des PreparedStatements (déjà fait)
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-1. Forker le projet
-2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
-3. Commiter vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Pousser vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
-
-## 📝 Licence
-
-Ce projet est un projet éducatif.
-
-## 👤 Auteur
-
-Projet développé dans le cadre d'un apprentissage Java EE.
-
-## 📞 Support
-
-Pour toute question ou problème, n'hésitez pas à ouvrir une issue sur le repository.
+![Java](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=java)
+![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-6.1-blue?style=flat-square)
+![Tomcat](https://img.shields.io/badge/Tomcat-11.0-yellow?style=flat-square&logo=apache-tomcat)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=flat-square&logo=mysql)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker)
 
 ---
 
-Développé avec ☕ et Java
+## Screenshots
+
+### Mode Clair — Liste des utilisateurs (Administrateur)
+![Liste des utilisateurs - Mode clair](docs/mode-clair.png)
+
+### Mode Sombre
+![Mode sombre](docs/mode-sombre.png)
+
+---
+
+## Fonctionnalités
+
+### Authentification & Sécurité
+- Connexion sécurisée (login / mot de passe)
+- `AuthenticationFilter` — protection de toutes les routes sensibles
+- Redirection automatique vers `/list` si déjà connecté
+- Session invalidée à la déconnexion (thème conservé)
+
+### Gestion des Rôles (Bonus)
+| Fonctionnalité | Administrateur | Utilisateur |
+|---|:---:|:---:|
+| Voir la liste | ✅ | ✅ |
+| Ajouter un utilisateur | ✅ | ❌ |
+| Modifier un utilisateur | ✅ | ❌ |
+| Supprimer un utilisateur | ✅ | ❌ |
+| Lien "Ajouter" dans la sidebar | ✅ | masqué |
+| Boutons Modifier / Supprimer | ✅ | masqués |
+
+### CRUD Utilisateurs
+- **Créer** — formulaire avec validation serveur, confirmation du mot de passe
+- **Lire** — tableau paginé avec badges de rôle
+- **Modifier** — pré-remplissage du formulaire, choix du rôle
+- **Supprimer** — modal de confirmation
+
+### UI / UX
+- Thème **Light** et **Dark** (`rgb(23, 24, 28)`) switchable en un clic
+- Icône thème dynamique (☀️ mode clair / 🌙 mode sombre)
+- Sidebar avec avatar (initiales), nom complet, badge rôle coloré
+- Validation côté serveur avec messages d'erreur en français
+
+---
+
+## Architecture
+
+```
+Architecture 3 Tiers — MVC
+┌─────────────────────────────────────────────────┐
+│  ① Présentation   Servlet (Controller) + JSP    │
+│  ② Métier         UserService · AuthService     │
+│  ③ Données        DAO (MySQL JDBC / in-memory)  │
+└─────────────────────────────────────────────────┘
+```
+
+**Patterns de conception :** MVC · DAO · Service Layer · Filter · Strategy
+
+```
+src/main/java/
+├── beans/           → Utilisateur.java (id, nom, prenom, login, password, role)
+├── dao/             → UtilisateurDao.java · UtilisateurDaoBdd.java
+├── service/         → UserService.java · AuthenticationService.java
+├── web/controller/  → AddUserServlet · UpdateUserServlet · RemoveUserServlet
+│                      ListUserServlet · AuthenticationController · ThemeController
+├── web/form/        → AbstractUserForm · AddUserForm · UpdateUserForm
+├── mapper/          → UserMapper.java
+└── filter/          → AuthenticationFilter.java
+
+src/main/webapp/
+├── WEB-INF/         → JSP (login, liste, ajouter, modifier)
+├── inc/             → header.jsp · footer.jsp
+└── css/             → light/ · dark/
+```
+
+---
+
+## Stack Technique
+
+| Composant | Technologie | Version |
+|-----------|-------------|---------|
+| Langage | Java | 17 |
+| Framework | Jakarta EE | 6.1 |
+| Servlets | Jakarta Servlet API | 6.1 |
+| Vues | JSP + JSTL | 2.0 |
+| Serveur | Apache Tomcat | 11.0 |
+| Base de données | MySQL | 8.0 |
+| Build | Apache Ant | — |
+| Conteneurs | Docker Compose | — |
+
+---
+
+## Démarrage Rapide
+
+### Prérequis
+- Java 17+
+- Apache Tomcat 11
+- Docker & Docker Compose (pour MySQL)
+- Apache Ant
+
+### 1. Lancer la base de données
+
+```bash
+docker compose up -d
+# MySQL sur :3306 · Adminer (GUI) sur http://localhost:8081
+# Connexion Adminer : server=mysql, user=root, pass=passer123, db=gesusers
+```
+
+### 2. Initialiser le schéma
+
+```sql
+-- Exécuter init.sql dans Adminer ou via MySQL CLI
+source init.sql
+```
+
+### 3. Compiler et déployer
+
+```bash
+ant deploy
+# WAR déployé sur Tomcat → http://localhost:8080/gesusers2
+```
+
+---
+
+## Comptes de test
+
+| Login | Mot de passe | Rôle |
+|-------|-------------|------|
+| `jdupont` | `password123` | **Administrateur** |
+| `mmartin` | `password456` | Utilisateur |
+| `pbernard` | `password789` | Utilisateur |
+
+---
+
+## Base de Données
+
+```sql
+CREATE TABLE utilisateur (
+    id        INT PRIMARY KEY AUTO_INCREMENT,
+    nom       VARCHAR(255),
+    prenom    VARCHAR(255),
+    login     VARCHAR(255) UNIQUE NOT NULL,
+    password  VARCHAR(255),
+    role      VARCHAR(50) NOT NULL DEFAULT 'user'
+);
+```
+
+---
+
+## Docker
+
+```yaml
+# docker-compose.yml
+services:
+  mysql:   image: mysql:8.0   # port 3306
+  adminer: image: adminer      # port 8081 — interface graphique BDD
+```
+
+---
+
+## Développé avec
+
+**Java EE · Jakarta Servlet · JSP · JSTL · MySQL · Docker · Apache Ant · Tomcat 11**
+
+---
+
+*Salif Biaye — 2025*

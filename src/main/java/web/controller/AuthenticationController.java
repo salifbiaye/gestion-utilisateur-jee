@@ -3,6 +3,7 @@ package web.controller;
 import java.io.IOException;
 import java.net.URLEncoder;
 
+import beans.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +30,12 @@ public class AuthenticationController extends HttpServlet {
 		switch (path) {
 		case "/login":
 
+			HttpSession existingSession = request.getSession(false);
+			if (existingSession != null && Boolean.TRUE.equals(existingSession.getAttribute("isConnected"))) {
+				response.sendRedirect(request.getContextPath() + "/list");
+				return;
+			}
+
 			String message = request.getParameter("message");
 			String status = request.getParameter("status");
 
@@ -46,7 +53,6 @@ public class AuthenticationController extends HttpServlet {
 			String savedTheme = null;
 
 			if (session != null) {
-
 				savedTheme = (String) session.getAttribute("theme");
 				session.invalidate();
 			}
@@ -74,16 +80,20 @@ public class AuthenticationController extends HttpServlet {
 			String login = request.getParameter("login");
 			String password = request.getParameter("password");
 
-			if (service.authenticate(login, password)) {
+			Utilisateur utilisateur = service.authenticate(login, password);
+
+			if (utilisateur != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("isConnected", true);
-				session.setAttribute("login", login);
-				message = "connexion réussie";
+				session.setAttribute("login", utilisateur.getLogin());
+				session.setAttribute("role", utilisateur.getRole());
+				session.setAttribute("nom", utilisateur.getNom());
+				session.setAttribute("prenom", utilisateur.getPrenom());
+				message = "Connexion réussie";
 				status = "success";
 				url = String.format("/list?message=%s&status=%s", URLEncoder.encode(message, "UTF-8"), status);
 				response.sendRedirect(request.getContextPath() + url);
 			} else {
-
 				message = "Login ou mot de passe incorrect";
 				status = "error";
 				url = String.format("/login?message=%s&status=%s", URLEncoder.encode(message, "UTF-8"), status);

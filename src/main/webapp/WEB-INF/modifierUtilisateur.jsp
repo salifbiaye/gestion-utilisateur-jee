@@ -58,6 +58,14 @@
             </c:if>
         </div>
 
+        <div class="form-field form-field--full">
+            <label for="role">Rôle</label>
+            <select name="role" id="role" class="form-select">
+                <option value="user" ${form.role == 'user' || empty form.role ? 'selected' : ''}>Utilisateur</option>
+                <option value="admin" ${form.role == 'admin' ? 'selected' : ''}>Administrateur</option>
+            </select>
+        </div>
+
     </div>
 
     <input type="submit" value="Modifier">

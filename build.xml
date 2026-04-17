@@ -13,11 +13,12 @@
     <property name="tomcat.home" value="C:/Program Files/Apache Software Foundation/Tomcat 11.0"/>
     <property name="tomcat.webapps" value="${tomcat.home}/webapps"/>
 
-    <!-- Classpath include JSTL libraries -->
+    <!-- Classpath include JSTL libraries + Jakarta Servlet API -->
     <path id="classpath.build">
         <fileset dir="${webapp.dir}/WEB-INF/lib">
             <include name="*.jar"/>
         </fileset>
+        <pathelement location="${user.home}/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar"/>
     </path>
 
     <!-- Init -->

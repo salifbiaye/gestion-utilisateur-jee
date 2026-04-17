@@ -15,8 +15,6 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// Laisser Tomcat gérer les fichiers statiques
 		String uri = request.getRequestURI();
 		if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png")) {
 			request.getServletContext().getNamedDispatcher("default").forward(request, response);

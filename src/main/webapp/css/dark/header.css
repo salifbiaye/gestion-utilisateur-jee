@@ -18,7 +18,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #09090c;
+  background: rgb(23, 24, 28);
 }
 
 /* ══════════════════════════════════════════
@@ -32,8 +32,7 @@ html, body {
   height: 100vh;
   flex-shrink: 0;
 
-  /* Visuel — couleur nettement distincte du body #09090c */
-  background: #1f2035;
+  background: rgb(27, 28, 33);
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: 1px 0 0 0 rgba(255, 255, 255, 0.06);
 
@@ -105,46 +104,84 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 16px;
+  padding: 12px 16px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.025);
 }
 
-.sidebar-avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+.sidebar-avatar,
+.sidebar-user-avatar {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.35);
 }
 
 .sidebar-user-info {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 4px;
   min-width: 0;
   overflow: hidden;
 }
 
-.sidebar-welcome {
-  font-size: 10px;
-  color: #52525b;
-  display: block;
-}
-
-.sidebar-username {
-  font-size: 12.5px;
+.sidebar-welcome,
+.sidebar-user-name {
+  font-size: 13px;
   font-weight: 600;
-  color: #d4d4d8;
+  color: #e4e4e7;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  line-height: 1.2;
+}
+
+.sidebar-username {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e4e4e7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.sidebar-user-role {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  width: fit-content;
+  line-height: 1.6;
+}
+
+.sidebar-user-role--admin {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.18);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.sidebar-user-role--user {
+  color: #a1a1aa;
+  background: rgba(63, 63, 70, 0.5);
+  border: 1px solid rgba(82, 82, 91, 0.5);
 }
 
 /* ── Navigation ── */
@@ -263,14 +300,16 @@ html, body {
   flex: 1;
   min-width: 0;
   height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #09090c;
+  background: rgb(23, 24, 28);
 }
 
 .main-content {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   padding: 40px 36px;
 }
 
